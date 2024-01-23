@@ -1,0 +1,26 @@
+<.header>
+  Listing Psychologists
+  <:actions>
+    <.link href={~p"/psychologists/new"}>
+      <.button>New Psychologist</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="psychologists" rows={@psychologists} row_click={&JS.navigate(~p"/psychologists/#{&1}")}>
+  <:col :let={psychologist} label="Name"><%= psychologist.name %></:col>
+  <:col :let={psychologist} label="Last name"><%= psychologist.last_name %></:col>
+  <:col :let={psychologist} label="Phone number"><%= psychologist.phone_number %></:col>
+  <:col :let={psychologist} label="Profession"><%= psychologist.profession %></:col>
+  <:action :let={psychologist}>
+    <div class="sr-only">
+      <.link navigate={~p"/psychologists/#{psychologist}"}>Show</.link>
+    </div>
+    <.link navigate={~p"/psychologists/#{psychologist}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={psychologist}>
+    <.link href={~p"/psychologists/#{psychologist}"} method="delete" data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>
