@@ -17,8 +17,11 @@ defmodule MindfulloveWeb.Router do
   scope "/", MindfulloveWeb do
     pipe_through :browser
 
+    live "/thermostat", ThermostatLive
+
     resources "/psychologists", PsychologistController
-    get "/", PageController, :home
+    # get "/", PageController, :home
+    get "/", PageController, :dashboard
   end
 
   # Other scopes may use custom stacks.

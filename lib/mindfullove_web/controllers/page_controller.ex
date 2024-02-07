@@ -6,4 +6,7 @@ defmodule MindfulloveWeb.PageController do
     # so skip the default app layout.
     render(conn, :home, layout: false)
   end
+  def dashboard(conn, _params) do
+    render(conn, :dashboard, layout: false)
+  end
 end
