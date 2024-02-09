@@ -15,10 +15,12 @@ module.exports = {
     "../lib/*_web/**/*.*ex",
   ],
   theme: {
-    extend: {
-      colors: {
-        brand: "#FD4F00",
-      },
+    colors: {
+      white: "#EEEEEE",
+      gray: "#E5E7EB",
+      blue: "#053B50",
+      turquoise: "#176B87",
+      light: "#64CCC5",
     },
   },
   plugins: [
