@@ -1,0 +1,1 @@
+- esta muy antiguo, muchas cosas cambiaron con docker
