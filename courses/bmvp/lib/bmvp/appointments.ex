@@ -21,8 +21,8 @@ defmodule Bmvp.Appointments do
     Repo.all(Appointment)
   end
 
-  def list_appointments_by_user_id(user_id) do
-    query = from(a in Appointment, where: a.user_id == ^user_id)
+  def list_appointments_by_account_id(account_id) do
+    query = from(a in Appointment, where: a.user_id == ^account_id)
     Repo.all(query)
   end
 

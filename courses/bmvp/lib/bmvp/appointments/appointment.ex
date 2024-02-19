@@ -16,7 +16,7 @@ defmodule Bmvp.Appointments.Appointment do
   @doc false
   def changeset(appointment, attrs) do
     appointment
-    |> cast(attrs, [:date, :status])
+    |> cast(attrs, [:user_id, :date, :status])
     |> validate_required([:date, :status])
   end
 end

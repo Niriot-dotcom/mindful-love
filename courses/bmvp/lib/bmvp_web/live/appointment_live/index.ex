@@ -4,9 +4,12 @@ defmodule BmvpWeb.AppointmentLive.Index do
   alias Bmvp.Appointments
   alias Bmvp.Appointments.Appointment
 
+  on_mount({BmvpWeb.AccountAuth, :mount_current_account})
+
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :appointments, Appointments.list_appointments())}
+    account_id = socket.assigns.current_account.id
+    {:ok, stream(socket, :appointments, Appointments.list_appointments_by_account_id(account_id))}
   end
 
   @impl true

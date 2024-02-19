@@ -6,7 +6,8 @@ defmodule Bmvp.Repo.Migrations.CreateAppointments do
       add :id, :binary_id, primary_key: true
       add :date, :naive_datetime
       add :status, :text
-      add :user_id, references(:users, on_delete: :nothing, type: :binary_id)
+      # add :user_id, references(:accounts, on_delete: :nothing, type: :binary_id)
+      add :user_id, :binary_id
       add :psychologist_id, references(:psychologists, on_delete: :nothing, type: :binary_id)
 
       timestamps(type: :utc_datetime)

@@ -1,6 +1,8 @@
 defmodule BmvpWeb.Router do
   use BmvpWeb, :router
 
+  import BmvpWeb.AccountAuth
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -8,6 +10,7 @@ defmodule BmvpWeb.Router do
     plug :put_root_layout, html: {BmvpWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_account
   end
 
   pipeline :api do
@@ -60,6 +63,44 @@ defmodule BmvpWeb.Router do
 
       live_dashboard "/dashboard", metrics: BmvpWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
+    end
+  end
+
+  ## Authentication routes
+
+  scope "/", BmvpWeb do
+    pipe_through [:browser, :redirect_if_account_is_authenticated]
+
+    live_session :redirect_if_account_is_authenticated,
+      on_mount: [{BmvpWeb.AccountAuth, :redirect_if_account_is_authenticated}] do
+      live "/accounts/register", AccountRegistrationLive, :new
+      live "/accounts/log_in", AccountLoginLive, :new
+      live "/accounts/reset_password", AccountForgotPasswordLive, :new
+      live "/accounts/reset_password/:token", AccountResetPasswordLive, :edit
+    end
+
+    post "/accounts/log_in", AccountSessionController, :create
+  end
+
+  scope "/", BmvpWeb do
+    pipe_through [:browser, :require_authenticated_account]
+
+    live_session :require_authenticated_account,
+      on_mount: [{BmvpWeb.AccountAuth, :ensure_authenticated}] do
+      live "/accounts/settings", AccountSettingsLive, :edit
+      live "/accounts/settings/confirm_email/:token", AccountSettingsLive, :confirm_email
+    end
+  end
+
+  scope "/", BmvpWeb do
+    pipe_through [:browser]
+
+    delete "/accounts/log_out", AccountSessionController, :delete
+
+    live_session :current_account,
+      on_mount: [{BmvpWeb.AccountAuth, :mount_current_account}] do
+      live "/accounts/confirm/:token", AccountConfirmationLive, :edit
+      live "/accounts/confirm", AccountConfirmationInstructionsLive, :new
     end
   end
 end
