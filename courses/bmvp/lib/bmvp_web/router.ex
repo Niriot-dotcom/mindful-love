@@ -18,6 +18,27 @@ defmodule BmvpWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    # users
+    live "/users", UserLive.Index, :index
+    live "/users/new", UserLive.Index, :new
+    live "/users/:id/edit", UserLive.Index, :edit
+    live "/users/:id", UserLive.Show, :show
+    live "/users/:id/show/edit", UserLive.Show, :edit
+
+    # psychologists
+    live "/psychologists", PsychologistLive.Index, :index
+    live "/psychologists/new", PsychologistLive.Index, :new
+    live "/psychologists/:id/edit", PsychologistLive.Index, :edit
+    live "/psychologists/:id", PsychologistLive.Show, :show
+    live "/psychologists/:id/show/edit", PsychologistLive.Show, :edit
+
+    # appointments
+    live "/appointments", AppointmentLive.Index, :index
+    live "/appointments/new", AppointmentLive.Index, :new
+    live "/appointments/:id/edit", AppointmentLive.Index, :edit
+    live "/appointments/:id", AppointmentLive.Show, :show
+    live "/appointments/:id/show/edit", AppointmentLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
