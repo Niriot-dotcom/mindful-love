@@ -1,0 +1,33 @@
+<.header>
+  Psychologist <%= @psychologist.id %>
+  <:subtitle>This is a psychologist record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/psychologists/#{@psychologist}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit psychologist</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="First name"><%= @psychologist.first_name %></:item>
+  <:item title="Last name"><%= @psychologist.last_name %></:item>
+  <:item title="Description"><%= @psychologist.description %></:item>
+  <:item title="Birthdate"><%= @psychologist.birthdate %></:item>
+  <:item title="Address"><%= @psychologist.address %></:item>
+  <:item title="Occupation"><%= @psychologist.occupation %></:item>
+  <:item title="Specialties"><%= @psychologist.specialties %></:item>
+  <:item title="Modalities"><%= @psychologist.modalities %></:item>
+</.list>
+
+<.back navigate={~p"/psychologists"}>Back to psychologists</.back>
+
+<.modal :if={@live_action == :edit} id="psychologist-modal" show on_cancel={JS.patch(~p"/psychologists/#{@psychologist}")}>
+  <.live_component
+    module={MindfulloveWeb.PsychologistLive.FormComponent}
+    id={@psychologist.id}
+    title={@page_title}
+    action={@live_action}
+    psychologist={@psychologist}
+    patch={~p"/psychologists/#{@psychologist}"}
+  />
+</.modal>
