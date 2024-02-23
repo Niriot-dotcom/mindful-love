@@ -22,6 +22,20 @@ defmodule Mindfullove.Appointments do
   end
 
   @doc """
+  Returns the list of appointments by user id.
+
+  ## Examples
+
+      iex> list_appointments_by_user_id()
+      [%Appointment{}, ...]
+
+  """
+  def list_appointments_by_user_id(user_id) do
+    query = from(a in Appointment, where: a.user_id == ^user_id)
+    Repo.all(query)
+  end
+
+  @doc """
   Gets a single appointment.
 
   Raises `Ecto.NoResultsError` if the Appointment does not exist.

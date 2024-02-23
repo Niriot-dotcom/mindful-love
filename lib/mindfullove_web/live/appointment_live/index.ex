@@ -4,9 +4,12 @@ defmodule MindfulloveWeb.AppointmentLive.Index do
   alias Mindfullove.Appointments
   alias Mindfullove.Appointments.Appointment
 
+  on_mount({MindfulloveWeb.UserAuth, :mount_current_user})
+
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :appointments, Appointments.list_appointments())}
+    user_id = socket.assigns.current_user.id
+    {:ok, stream(socket, :appointments, Appointments.list_appointments_by_user_id(user_id))}
   end
 
   @impl true

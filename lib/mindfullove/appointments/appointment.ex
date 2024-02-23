@@ -3,10 +3,10 @@ defmodule Mindfullove.Appointments.Appointment do
   import Ecto.Changeset
 
   schema "appointments" do
-    field :status, Ecto.Enum, values: [:CANCELLED, :ACTIVE]
-    field :date, :naive_datetime
-    field :user_id, :id
-    field :psychologist_id, :id
+    field(:status, Ecto.Enum, values: [:CANCELLED, :ACTIVE])
+    field(:date, :naive_datetime)
+    field(:user_id, :id)
+    field(:psychologist_id, :id)
 
     timestamps(type: :utc_datetime)
   end
@@ -14,7 +14,7 @@ defmodule Mindfullove.Appointments.Appointment do
   @doc false
   def changeset(appointment, attrs) do
     appointment
-    |> cast(attrs, [:date, :status])
+    |> cast(attrs, [:user_id, :date, :status])
     |> validate_required([:date, :status])
   end
 end

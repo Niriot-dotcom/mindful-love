@@ -75,6 +75,9 @@ defmodule MindfulloveWeb.AppointmentLive.FormComponent do
   end
 
   defp save_appointment(socket, :new, appointment_params) do
+    user_id = socket.assigns.current_user.id
+    appointment_params = Map.put(appointment_params, "user_id", user_id)
+
     case Appointments.create_appointment(appointment_params) do
       {:ok, appointment} ->
         notify_parent({:saved, appointment})
