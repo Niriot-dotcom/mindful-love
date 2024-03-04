@@ -3,13 +3,20 @@ defmodule MindfulloveWeb.AppointmentLive.Index do
 
   alias Mindfullove.Appointments
   alias Mindfullove.Appointments.Appointment
+  alias Timex, as: T
 
   on_mount({MindfulloveWeb.UserAuth, :mount_current_user})
 
   @impl true
   def mount(_params, _session, socket) do
     user_id = socket.assigns.current_user.id
-    {:ok, stream(socket, :appointments, Appointments.list_appointments_by_user_id(user_id))}
+
+    active_appointments =
+      Enum.filter(Appointments.list_appointments_by_user_id(user_id), fn appointment ->
+        appointment.status == :ACTIVE
+      end)
+
+    {:ok, stream(socket, :appointments, active_appointments)}
   end
 
   @impl true

@@ -1,18 +1,27 @@
-<.header>
+<%!-- <.header>
   Listing Appointments
   <:actions>
     <.link patch={~p"/appointments/new"}>
       <.button>New Appointment</.button>
     </.link>
   </:actions>
-</.header>
+</.header> --%>
 
 <.table
   id="appointments"
   rows={@streams.appointments}
   row_click={fn {_id, appointment} -> JS.navigate(~p"/appointments/#{appointment}") end}
 >
-  <:col :let={{_id, appointment}} label="Date"><%= appointment.date %></:col>
+  <%!-- <:col :let={{_id, appointment}} label="Date"><%= appointment.date %></:col> --%>
+  <%!-- <:col :let={{_id, appointment}} label="Date"><%= Timex.parse("22-AUG-18", appointment.date) %></:col> --%>
+  <%!-- <:col :let={{_id, appointment}} label="Date"><%= T.parse("2024-03-0312:00:00", "{ISO:Extended}") |> T.format("{h12}:{0m} {P}") %></:col> --%>
+  <:col :let={{_id, appointment}} label="Date">
+    <%!-- <%= with {:ok, datetime} <- T.parse("2024-03-03 12:00:00", "{ISO:Extended}") do %> --%>
+      <%!-- <%= T.format({2013,8,18}, "{1M} {D}, {YYYY} at {h}:{0m} {P}") %> --%>
+      <%!-- <%= T.format({2013,8,18}, "{YYYY}-{M}-{D}") %> --%>
+      <%= case T.format({2013,8,18,9,9}, "{1M} {D}, {YYYY} at {h}:{0m} {P}") do {:ok, formatted_date} -> formatted_date; _ -> "Error formatting date" end %>
+    <%!-- <% end %> --%>
+  </:col>
   <:col :let={{_id, appointment}} label="Status"><%= appointment.status %></:col>
   <:action :let={{_id, appointment}}>
     <div class="sr-only">
@@ -29,6 +38,40 @@
     </.link>
   </:action>
 </.table>
+
+<div class="w-screen h-screen flex space-x-3">
+  <%!-- profile --%>
+  <div class="flex flex-col h-full w-3/12 p-10 bg-slate-200 rounded-xl justify-between">
+    <div class="text-center">
+      <img class="w-full h-[20vh] mb-5 object-contain" src="https://jorgecolonconsulting.com/wp-content/uploads/elixir.png" />
+      <h1 class="text-xl font-semibold">Paty Lopez</h1>
+      <p class="text-lg">since 2018</p>
+      <.link patch={~p"/appointments/new"}>
+        <%!-- <.button>New Appointment</.button> --%>
+        <button class="bg-teal-500 hover:bg-teal-700 text-white font-bold py-4 rounded-xl px-8 mt-5 text-center">
+          New appointment
+        </button>
+      </.link>
+    </div>
+  </div>
+
+  <%!-- dashboard --%>
+  <div class="h-full w-9/12 p-10 bg-slate-200 rounded-xl flex flex-col space-y-3">
+    <%!-- quote --%>
+    <div class="p-10 bg-slate-100 rounded-xl flex flex-col space-y-3 mb-8">
+      <h1 class="text-xl font-bold">quote of the day:</h1>
+      <h1 class="text-xl">florecer exige pasar por todas las estaciones.</h1>
+    </div>
+
+    <%!-- next appointment --%>
+    <h1 class="text-xl font-bold pl-5">Next appointment</h1>
+    <div class="p-10 bg-teal-800 rounded-xl flex flex-col space-y-3 text-white">
+      <h1 class="text-2xl font-bold">PsyD. John Smith</h1>
+      <%!-- <h1 class="text-lg">8:00 CST | Friday, Feb 9, 2024</h1> --%>
+    </div>
+    <%!-- <%= @streams.appointments %> --%>
+  </div>
+</div>
 
 <.modal :if={@live_action in [:new, :edit]} id="appointment-modal" show on_cancel={JS.patch(~p"/appointments")}>
   <.live_component
