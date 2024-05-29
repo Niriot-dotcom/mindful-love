@@ -2,7 +2,7 @@ defmodule MindfulloveWeb.Live.DashboardLive do
   use Phoenix.LiveView
 
   def render(assigns) do
-    ~L"""
+    ~H"""
     """
     # render(conn, :index, layout: false)
   end
