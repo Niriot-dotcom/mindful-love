@@ -87,6 +87,9 @@ defmodule MindfulloveWeb do
       import MindfulloveWeb.CoreComponents
       import MindfulloveWeb.Gettext
 
+      # custom components
+      import MindfulloveWeb.PsychologistCard
+
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
 
