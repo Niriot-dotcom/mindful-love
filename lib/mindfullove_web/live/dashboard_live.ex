@@ -1,10 +1,13 @@
-defmodule MindfulloveWeb.Live.DashboardLive do
-  use Phoenix.LiveView
+defmodule MindfulloveWeb.DashboardLive do
+  use MindfulloveWeb, :live_view
 
-  def render(assigns) do
-    ~H"""
-    """
-    # render(conn, :index, layout: false)
+  def mount(_params, _session, socket) do
+    # socket =
+    #   assign(socket,
+    #     key: value
+    #   )
+
+    {:ok, socket}
   end
 
   # handlers
@@ -15,6 +18,7 @@ defmodule MindfulloveWeb.Live.DashboardLive do
     # Devolver el socket sin ningún cambio
     {:noreply, socket}
   end
+
   def handle_event("close_user_session", _value, socket) do
     # {:noreply, update(socket, :temperature, &(&1 + 1))}
     IO.puts "handle event logout"

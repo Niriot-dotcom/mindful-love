@@ -18,14 +18,19 @@ defmodule MindfulloveWeb.Router do
   end
 
   scope "/", MindfulloveWeb do
+    pipe_through [:browser, :require_authenticated_user ]
+
+    live("/dashboard", DashboardLive)
+    live("/appointment", AppointmentLive)
+  end
+
+  scope "/", MindfulloveWeb do
     pipe_through(:browser)
 
     live("/thermostat", ThermostatLive)
     # live "/dashboard", DashboardLive
 
-    resources("/psychologists", PsychologistController)
     get("/", PageController, :home)
-    get("/dashboard", DashboardController, :index)
 
     # users
     # live("/users", UserLive.Index, :index)
@@ -42,7 +47,7 @@ defmodule MindfulloveWeb.Router do
     live("/psychologists/:id/show/edit", PsychologistLive.Show, :edit)
 
     # appointments
-    live("/appointments", AppointmentLive.Index, :index)
+    # live("/dashboard", AppointmentLive.Index, :index)
     live("/appointments/new", AppointmentLive.Index, :new)
     live("/appointments/:id/edit", AppointmentLive.Index, :edit)
     live("/appointments/:id", AppointmentLive.Show, :show)
