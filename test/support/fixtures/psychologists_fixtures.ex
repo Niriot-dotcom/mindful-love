@@ -18,7 +18,7 @@ defmodule Mindfullove.PsychologistsFixtures do
         last_name: "some last_name",
         modalities: :IN_PERSON,
         occupation: "some occupation",
-        specialties: ["option1", "option2"]
+        specialties: ["child", "educational"]
       })
       |> Mindfullove.Psychologists.create_psychologist()
 

@@ -21,7 +21,7 @@ defmodule Mindfullove.PsychologistsTest do
     end
 
     test "create_psychologist/1 with valid data creates a psychologist" do
-      valid_attrs = %{address: "some address", description: "some description", first_name: "some first_name", last_name: "some last_name", birthdate: ~N[2024-02-21 17:33:00], occupation: "some occupation", specialties: ["option1", "option2"], modalities: :IN_PERSON}
+      valid_attrs = %{address: "some address", description: "some description", first_name: "some first_name", last_name: "some last_name", birthdate: ~N[2024-02-21 17:33:00], occupation: "some occupation", specialties: ["child", "educational"], modalities: :IN_PERSON}
 
       assert {:ok, %Psychologist{} = psychologist} = Psychologists.create_psychologist(valid_attrs)
       assert psychologist.address == "some address"
@@ -30,7 +30,7 @@ defmodule Mindfullove.PsychologistsTest do
       assert psychologist.last_name == "some last_name"
       assert psychologist.birthdate == ~N[2024-02-21 17:33:00]
       assert psychologist.occupation == "some occupation"
-      assert psychologist.specialties == ["option1", "option2"]
+      assert psychologist.specialties == ["child", "educational"]
       assert psychologist.modalities == :IN_PERSON
     end
 
@@ -40,7 +40,7 @@ defmodule Mindfullove.PsychologistsTest do
 
     test "update_psychologist/2 with valid data updates the psychologist" do
       psychologist = psychologist_fixture()
-      update_attrs = %{address: "some updated address", description: "some updated description", first_name: "some updated first_name", last_name: "some updated last_name", birthdate: ~N[2024-02-22 17:33:00], occupation: "some updated occupation", specialties: ["option1"], modalities: :HYBRID}
+      update_attrs = %{address: "some updated address", description: "some updated description", first_name: "some updated first_name", last_name: "some updated last_name", birthdate: ~N[2024-02-22 17:33:00], occupation: "some updated occupation", specialties: ["child"], modalities: :HYBRID}
 
       assert {:ok, %Psychologist{} = psychologist} = Psychologists.update_psychologist(psychologist, update_attrs)
       assert psychologist.address == "some updated address"
@@ -49,7 +49,7 @@ defmodule Mindfullove.PsychologistsTest do
       assert psychologist.last_name == "some updated last_name"
       assert psychologist.birthdate == ~N[2024-02-22 17:33:00]
       assert psychologist.occupation == "some updated occupation"
-      assert psychologist.specialties == ["option1"]
+      assert psychologist.specialties == ["child"]
       assert psychologist.modalities == :HYBRID
     end
 

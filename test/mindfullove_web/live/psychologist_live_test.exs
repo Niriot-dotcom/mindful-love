@@ -4,8 +4,8 @@ defmodule MindfulloveWeb.PsychologistLiveTest do
   import Phoenix.LiveViewTest
   import Mindfullove.PsychologistsFixtures
 
-  @create_attrs %{address: "some address", description: "some description", first_name: "some first_name", last_name: "some last_name", birthdate: "2024-02-21T17:33:00", occupation: "some occupation", specialties: ["option1", "option2"], modalities: :IN_PERSON}
-  @update_attrs %{address: "some updated address", description: "some updated description", first_name: "some updated first_name", last_name: "some updated last_name", birthdate: "2024-02-22T17:33:00", occupation: "some updated occupation", specialties: ["option1"], modalities: :HYBRID}
+  @create_attrs %{address: "some address", description: "some description", first_name: "some first_name", last_name: "some last_name", birthdate: "2024-02-21T17:33:00", occupation: "some occupation", specialties: ["child", "educational"], modalities: :IN_PERSON}
+  @update_attrs %{address: "some updated address", description: "some updated description", first_name: "some updated first_name", last_name: "some updated last_name", birthdate: "2024-02-22T17:33:00", occupation: "some updated occupation", specialties: ["child"], modalities: :HYBRID}
   @invalid_attrs %{address: nil, description: nil, first_name: nil, last_name: nil, birthdate: nil, occupation: nil, specialties: [], modalities: nil}
 
   defp create_psychologist(_) do

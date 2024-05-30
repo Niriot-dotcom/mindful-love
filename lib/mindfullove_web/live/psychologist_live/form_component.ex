@@ -26,23 +26,54 @@ defmodule MindfulloveWeb.PsychologistLive.FormComponent do
         <.input field={@form[:address]} type="text" label="Address" />
         <.input field={@form[:occupation]} type="text" label="Occupation" />
         <.input
+          id="multiselect-specialties"
+          phx-hook="MultiSelect"
           field={@form[:specialties]}
           type="select"
           multiple
           label="Specialties"
-          options={[{"Option 1", "option1"}, {"Option 2", "option2"}]}
+          options={[{"Child", "child"}, {"Sports", "sports"}, {"Gender", "gender"}, {"Educational", "educational"}, {"Industrial", "industrial"}, {"Military", "military"}, {"Forensic", "forensic"}]}
         />
+        <%!-- <.input
+          id="multiselect-specialties"
+          field={@form[:specialties]}
+          type="checkbox"
+          options={[{"Child", "child"}, {"Sports", "sports"}, {"Gender", "gender"}, {"Educational", "educational"}, {"Industrial", "industrial"}, {"Military", "military"}, {"Forensic", "forensic"}]}
+        /> --%>
+        <%= for {text, k} <- [{"Child", "child"}, {"Sports", "sports"}, {"Gender", "gender"}, {"Educational", "educational"}, {"Industrial", "industrial"}, {"Military", "military"}, {"Forensic", "forensic"}] do %>
+            <input
+              type="checkbox"
+              name="prices[]"
+              value={text}
+              id={k}
+            />
+            <label for={k}><%= text %></label>
+          <% end %>
         <.input
           field={@form[:modalities]}
           type="select"
           label="Modalities"
           prompt="Choose a value"
-          options={Ecto.Enum.values(Mindfullove.Psychologists.Psychologist, :modalities)}
+          options={format_modalties()}
         />
         <:actions>
           <.button phx-disable-with="Saving...">Save Psychologist</.button>
         </:actions>
       </.simple_form>
+
+      <%!-- <script>
+        function MultiSelect(el) {
+          console.log("HERE MultiSelect")
+          el.addEventListener('click', (event) => {
+          console.log("HERE MultiSelect CLICKCKSKSK")
+            event.preventDefault(); // Prevent default multi-select behavior
+            const option = event.target.closest('option');
+            if (option) {
+              option.selected = !option.selected;
+            }
+          });
+        }
+      </script> --%>
     </div>
     """
   end
@@ -106,4 +137,11 @@ defmodule MindfulloveWeb.PsychologistLive.FormComponent do
   end
 
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+
+  defp format_modalties() do
+    modalties = Ecto.Enum.values(Mindfullove.Psychologists.Psychologist, :modalities)
+    Enum.map(modalties, fn m -> m |> Atom.to_string() |> String.replace("_", " ") |> String.capitalize() end)
+    |> Enum.with_index()
+    |> Enum.map(fn {text, i} -> {text, Enum.at(modalties, i)} end)
+  end
 end
